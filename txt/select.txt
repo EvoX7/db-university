@@ -5,6 +5,10 @@ FROM `students`
 WHERE `date_of_birth` BETWEEN '1990-01-01' AND '1990-12-31';
 
 
+SELECT * 
+FROM `students` 
+WHERE YEAR(`date_of_birth`) = 1990;
+
 
 
 2. Selezionare tutti i corsi che valgono più di 10 crediti (479)
@@ -14,8 +18,6 @@ FROM `courses`
 WHERE `cfu` > 10;
 
 
-
-
 3. Selezionare tutti gli studenti che hanno più di 30 anni
 
 SELECT * 
@@ -23,6 +25,9 @@ FROM `students`
 WHERE `date_of_birth` < '1990-01-01';
 (rispetto al 2021-12-31)
 
+SELECT * 
+FROM `students`
+WHERE TIMESTAMPIFF(YEAR, curdate) ;
 
 
 
@@ -31,7 +36,16 @@ laurea (286)
 
 SELECT * 
 FROM `courses` 
-WHERE `period` LIKE '%I semestre%' AND `period` NOT LIKE '%II semestre%' AND `year` LIKE '%1%';
+WHERE `period` LIKE '%I semestre%' 
+AND `period` NOT LIKE '%II semestre%' 
+AND `year` LIKE '%1%';
+
+
+
+SELECT * 
+FROM `courses` 
+WHERE `period` = 'I semestre' 
+AND `year` = '1';
 
 
 
@@ -40,7 +54,13 @@ WHERE `period` LIKE '%I semestre%' AND `period` NOT LIKE '%II semestre%' AND `ye
 
 SELECT * 
 FROM `exams` 
-WHERE `date` = '2020-06-20' AND `hour` > '14:00:00';
+WHERE `date` = '2020-06-20' 
+AND `hour` > '14:00:00';
+
+SELECT * 
+FROM `exams` 
+WHERE `date` = '2020-06-20' 
+AND HOUR (`hour`) > '14';
 
 
 
@@ -51,6 +71,10 @@ SELECT *
 FROM `degrees` 
 WHERE `level` LIKE '%magistrale%';
 
+SELECT * 
+FROM `degrees` 
+WHERE `level` = 'magistrale';
+
 
 
 
@@ -59,11 +83,18 @@ WHERE `level` LIKE '%magistrale%';
 SELECT COUNT(*) 
 FROM `departments`; 
 
+SELECT COUNT(*) AS number_of_departments
+FROM `departments`; 
+
 
 
 
 8. Quanti sono gli insegnanti che non hanno un numero di telefono? (50)
 
 SELECT *
+FROM `teachers` 
+WHERE `phone` IS NULL;
+
+SELECT COUNT(*) AS teacher_no
 FROM `teachers` 
 WHERE `phone` IS NULL;
